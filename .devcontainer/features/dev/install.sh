@@ -115,7 +115,7 @@ apt update && apt-get install -y --no-install-recommends \
     netcat-openbsd \
     procps \
     iproute2 \
-    net-tools \ 
+    net-tools \
     bind9-dnsutils \
     iperf3 \
     vim \
