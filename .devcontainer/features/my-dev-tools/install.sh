@@ -63,8 +63,6 @@ pipx install ruyi
 # https://github.com/xmake-io/xmake
 curl -fsSL https://xmake.io/shget.text | bash
 
-
-
 apt update && apt-get install -y --no-install-recommends \
     strace \
     make \
