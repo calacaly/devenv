@@ -2,8 +2,6 @@ name: 'build'
 on: # rebuild any PRs and main branch changes
   pull_request:
   push:
-    branches:
-      - master
     tags:
       - 'v*'
 
@@ -34,7 +32,6 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
           # Change this to point to your image name
-          imageName: ${{ secrets.DOCKERHUB_USERNAME }}/devenv
-          imageTag: ${{ steps.meta.outputs.tags }}
+          imageName: ${{ steps.meta.outputs.images }}
           # Change this to be your CI task/script
           push: always
