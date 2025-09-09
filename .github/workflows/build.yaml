@@ -27,9 +27,7 @@ jobs:
         with:
           images: ${{ secrets.DOCKERHUB_USERNAME }}/devenv
           tags: |
-            type=ref,event=branch
             type=ref,event=tag
-            type=sha
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and run Dev Container task
