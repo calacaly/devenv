@@ -65,23 +65,6 @@ add_to_path "$HOME/go/bin"
 
 # <<< golang setting <<<
 
-# >>> rust setting >>>
-echo "setting rust ✅"
-touch ~/.cargo/config.toml
-tee ~/.cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = 'rsproxy-sparse'
-[source.rsproxy]
-registry = "https://rsproxy.cn/crates.io-index"
-[source.rsproxy-sparse]
-registry = "sparse+https://rsproxy.cn/index/"
-[registries.rsproxy]
-index = "https://rsproxy.cn/crates.io-index"
-[net]
-git-fetch-with-cli = true
-EOF
-# <<< rust setting <<<
-
 # >>> pip setting >>>
 echo "setting pip ✅"
 pip config set global.index-url https://mirrors.aliyun.com/pypi/simple
@@ -113,6 +96,7 @@ cargo install procs
 # https://github.com/tristanisham/zvm
 curl https://raw.githubusercontent.com/tristanisham/zvm/master/install.sh | bash
 # zvm for zig version manager
+source $HOME/.bashrc
 zvm i master --zls
 
 # ruyi sdk https://github.com/ruyisdk/ruyi
@@ -142,3 +126,20 @@ apt update && apt-get install -y --no-install-recommends \
 
 echo "tools installed ✅"
 # <<< tools install <<<
+
+# >>> rust setting >>>
+echo "setting rust ✅"
+touch ~/.cargo/config.toml
+tee ~/.cargo/config.toml <<EOF
+[source.crates-io]
+replace-with = 'rsproxy-sparse'
+[source.rsproxy]
+registry = "https://rsproxy.cn/crates.io-index"
+[source.rsproxy-sparse]
+registry = "sparse+https://rsproxy.cn/index/"
+[registries.rsproxy]
+index = "https://rsproxy.cn/crates.io-index"
+[net]
+git-fetch-with-cli = true
+EOF
+# <<< rust setting <<<
