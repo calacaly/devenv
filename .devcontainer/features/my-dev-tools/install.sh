@@ -33,20 +33,53 @@ pip config set global.index-url https://mirrors.aliyun.com/pypi/simple
 # <<< uv init <<<
 
 # >>> tools install >>>
-# tcping
+# tcping https://github.com/pouriyajamshidi/tcping
 go install github.com/pouriyajamshidi/tcping/v2@latest
-# trippy like tracerout
-cargo install trippy --locked
-# zvm for zig version manager
-curl https://raw.githubusercontent.com/tristanisham/zvm/master/install.sh | bash
-zvm i master --zls
-# nmap
-cargo install rustscan
 
-# ruyi sdk
+# https://github.com/fujiapple852/trippy
+cargo install trippy --locked
+
+# https://github.com/orhun/binsider
+cargo install binsider
+# # https://github.com/bee-san/RustScan
+cargo install rustscan
+# https://github.com/hatoo/oha
+cargo install oha 
+# https://github.com/ClementTsang/bottom
+cargo install bottom
+# https://github.com/hatoo/oha
+cargo install oha
+# https://github.com/dalance/procs
+cargo install procs
+
+# https://github.com/tristanisham/zvm
+curl https://raw.githubusercontent.com/tristanisham/zvm/master/install.sh | bash
+# zvm for zig version manager
+zvm i master --zls
+
+# ruyi sdk https://github.com/ruyisdk/ruyi
 pipx install ruyi
 
-apt update && apt-get install -y strace gdb
+# https://github.com/xmake-io/xmake
+curl -fsSL https://xmake.io/shget.text | bash
+
+
+
+apt update && apt-get install -y --no-install-recommends \
+    strace \
+    make \
+    cmake \
+    gdb \
+    tcpdump \
+    inetutils-telnet \
+    netcat-openbsd
+    procps \
+    iproute2 \
+    net-tools \ 
+    bind9-dnsutils \
+    iperf3 \
+    vim \
+    bash-completion
 
 echo "tools installed ✅"
 # <<< tools install <<<

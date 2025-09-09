@@ -20,13 +20,12 @@
     "ghcr.io/devcontainer-community/devcontainer-features/bun.sh:1": {},
     "ghcr.io/devcontainers-community/features/llvm": {},
     "ghcr.io/devcontainers-extra/features/nmap-apt-get:1": {},
-    "ghcr.io/devcontainers/features/java:1": {},
+	"ghcr.io/devcontainers/features/java:1": {},
     "../features/my-dev-tools": {}
   },
   "customizations": {
     "vscode": {
       "extensions": [
-        "42crunch.vscode-openapi",
         "alibaba-cloud.tongyi-lingma",
         "bierner.markdown-preview-github-styles",
         "charliermarsh.ruff",
