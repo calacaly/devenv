@@ -1,0 +1,12 @@
+{
+  "id": "my-dev-tools",
+  "version": "0.1.0",
+  "name": "My Dev Tools",
+  "description": "Install Some Tools",
+  "dependsOn": {
+    "ghcr.io/devcontainers/features/rust:1": {},
+    "ghcr.io/devcontainers/features/python:1": {},
+    "ghcr.io/devcontainers/features/go:1": {},
+    "ghcr.io/devcontainers-extra/features/nmap-apt-get:1": {}
+  }
+}
