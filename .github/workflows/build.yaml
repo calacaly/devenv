@@ -34,6 +34,7 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
           # Change this to point to your image name
-          imageName: ${{ secrets.DOCKERHUB_USERNAME }}/devenv:${{ steps.meta.outputs.tags }}
+          imageName: ${{ secrets.DOCKERHUB_USERNAME }}/devenv
+          imageTag: ${{ steps.meta.outputs.tags }}
           # Change this to be your CI task/script
           push: always
