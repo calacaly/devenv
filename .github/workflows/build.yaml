@@ -1,26 +1,24 @@
-name: Build DevContainer Image
+# .github/workflows/build-devcontainer.yml
+name: Build DevContainer with Features
 
 on:
   push:
-    branches: [ main, master ]  # 根据你的主分支调整
-  workflow_dispatch:            # 支持手动触发
+    branches: [ main, master ]
 
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
       - name: Install devcontainer CLI
-        run: |
-          npm install -g @vscode/dev-container-cli
-          devcontainer --version
+        run: npm install -g @vscode/dev-container-cli
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -28,29 +26,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push DevContainer Image
+      - name: Build and Push
         env:
-          IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/devenv:latest
-          IMAGE_SHA:  ${{ secrets.DOCKERHUB_USERNAME }}/devenv:${{ github.sha }}
+          IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/devenv:latest
         run: |
-          echo "🏗️  Building image: $IMAGE_NAME"
-          
-          # 构建镜像
-          devcontainer build \
-            --workspace-folder . \
-            --image-name $IMAGE_NAME
-
-          # 打标签并推送
-          docker tag $IMAGE_NAME $IMAGE_SHA
-
-          echo "📤 Pushing $IMAGE_NAME"
-          docker push $IMAGE_NAME
-
-          echo "📤 Pushing $IMAGE_SHA"
-          docker push $IMAGE_SHA
-
-      - name: Output Image Info
-        run: |
-          echo "✅ 镜像已发布:"
-          echo "   ${{ secrets.DOCKERHUB_USERNAME }}/my-dev-env:latest"
-          echo "   ${{ secrets.DOCKERHUB_USERNAME }}/my-dev-env:${{ github.sha }}"
+          devcontainer build --workspace-folder . --image-name $IMAGE --log-level debug
+          docker push $IMAGE
