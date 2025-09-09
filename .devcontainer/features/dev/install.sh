@@ -77,7 +77,10 @@ apt update && apt-get install -y --no-install-recommends \
     bind9-dnsutils \
     iperf3 \
     vim \
-    bash-completion
+    bash-completion \
+    llvm \
+    clangd \
+    clang-tools
 
 echo "tools installed ✅"
 # <<< tools install <<<
