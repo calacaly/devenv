@@ -1,49 +1,32 @@
-# .github/workflows/build-devcontainer.yml
-name: Build DevContainer with Features
-
-on:
+name: 'build' 
+on: # rebuild any PRs and main branch changes
+  pull_request:
   push:
-    branches: [ main, master ]
+    branches:
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+
+      - name: Checkout (GitHub)
         uses: actions/checkout@v4
 
-      - name: Debug Features
-        run: |
-            echo "🔍 当前目录结构:"
-            find . -type f | grep -v node_modules | grep -v '\.git/'
-
-            echo "📄 检查 devcontainer-feature.json:"
-            cat features/dev/devcontainer-feature.json || echo "❌ 文件不存在"
-
-            echo "📄 检查 .dockerignore:"
-            cat .dockerignore || echo "无 .dockerignore"
-
-            echo "✅ Git 状态:"
-            git status    
-        
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install devcontainer CLI
-        run: npm install -g @vscode/dev-container-cli@0.39.0
-
-      - name: Login to Docker Hub
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
+          registry: docker.io
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push
-        env:
-          IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/devenv:latest
-        run: |
-          devcontainer build --workspace-folder . --image-name $IMAGE --log-level debug
-          docker push $IMAGE
+      - name: Build and run Dev Container task
+        uses: devcontainers/ci@v0.3
+        with:
+          # Change this to point to your image name
+          imageName: ghcr.io/example/example-devcontainer
+          # Change this to be your CI task/script
+          runCmd: |
+            # Add multiple commands to run if needed
+            make install-packages
+            make ci-build
