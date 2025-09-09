@@ -10,6 +10,6 @@
     "ghcr.io/devcontainers-extra/features/nmap-apt-get:1": {}
   },
   "containerEnv": {
-    "PATH": "${containerEnv:PATH}:${env:HOME}/go/bin"
+    "PATH": "${env:HOME}/go/bin:${env:PATH}"
   }
 }
