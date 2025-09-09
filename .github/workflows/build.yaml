@@ -12,6 +12,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Debug Features
+        run: |
+            echo "🔍 当前目录结构:"
+            find . -type f | grep -v node_modules | grep -v '\.git/'
+
+            echo "📄 检查 devcontainer-feature.json:"
+            cat features/dev/devcontainer-feature.json || echo "❌ 文件不存在"
+
+            echo "📄 检查 .dockerignore:"
+            cat .dockerignore || echo "无 .dockerignore"
+
+            echo "✅ Git 状态:"
+            git status    
+        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
