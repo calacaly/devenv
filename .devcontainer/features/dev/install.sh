@@ -96,8 +96,6 @@ cargo install procs
 # https://github.com/tristanisham/zvm
 curl https://raw.githubusercontent.com/tristanisham/zvm/master/install.sh | bash
 # zvm for zig version manager
-source $HOME/.bashrc
-zvm i master --zls
 
 # ruyi sdk https://github.com/ruyisdk/ruyi
 pipx install ruyi

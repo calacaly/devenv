@@ -4,6 +4,8 @@ on: # rebuild any PRs and main branch changes
   push:
     branches:
       - master
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -19,11 +21,21 @@ jobs:
           registry: docker.io
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Extract Docker Metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/devenv
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+            type=sha
+            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and run Dev Container task
         uses: devcontainers/ci@v0.3
         with:
           # Change this to point to your image name
-          imageName: ${{ secrets.DOCKERHUB_USERNAME }}/devenv
+          imageName: ${{ secrets.DOCKERHUB_USERNAME }}/devenv:${{ steps.meta.outputs.tags }}
           # Change this to be your CI task/script
           push: always
