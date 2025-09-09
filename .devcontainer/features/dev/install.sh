@@ -2,10 +2,67 @@
 # echo "setting apt ✅"
 # <<< apt setting <<<
 
+# === 函数：安全地将路径添加到指定文件的 PATH 中 ===
+add_to_path() {
+  local target_path="$1"
+  local config_file=$(get_config_file)
+
+  # 检查参数
+  if [ -z "$target_path" ]; then
+    echo "❌ Usage: add_to_path '/path/to/bin'"
+    return 1
+  fi
+
+  # 转义特殊字符（防止 / 或 . 导致 grep 错误）
+  local escaped_path
+  escaped_path=$(printf '%s\n' "$target_path" | sed 's/[[\.*^$()+?{|]/\\&/g')
+
+  # 检查是否已存在
+  if grep -qF "PATH.*$escaped_path" "$config_file" 2>/dev/null; then
+    echo "🔍 $config_file already contains $target_path, skipping."
+    return 0
+  fi
+
+  # 写入 export PATH
+  echo "export PATH=\"\$PATH:$target_path\"" >> "$config_file"
+  export PATH="$PATH:$target_path"
+  echo "✅ Added $target_path to $config_file"
+}
+
+# === 获取当前用户 shell ===
+get_user_shell() {
+  getent passwd "$(id -u)" | cut -d: -f7
+}
+
+# === 获取 shell 名称（bash/zsh）===
+get_shell_name() {
+  basename "$(get_user_shell)"
+}
+
+get_config_file() {
+  local shell_name=$(get_shell_name)
+  case $shell_name in
+    bash)
+      echo "$HOME/.bashrc"
+      ;;
+    zsh)
+      echo "$HOME/.zshrc"
+      ;;
+    *)
+      echo "Unsupported shell: $shell_name"
+      exit 1
+      ;;
+  esac
+}
+
+
 # >>> golang setting >>>
 echo "setting golang ✅"
 go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.cn,direct
+
+add_to_path "$HOME/go/bin"
+
 # <<< golang setting <<<
 
 # >>> rust setting >>>
