@@ -8,5 +8,8 @@
     "ghcr.io/devcontainers/features/python:1": {},
     "ghcr.io/devcontainers/features/go:1": {},
     "ghcr.io/devcontainers-extra/features/nmap-apt-get:1": {}
+  },
+  "containerEnv": {
+    "PATH": "${containerEnv:PATH}:${env:HOME}/go/bin"
   }
 }

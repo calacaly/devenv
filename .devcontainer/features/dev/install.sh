@@ -10,7 +10,8 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 # >>> rust setting >>>
 echo "setting rust ✅"
-tee ~/.cargo/config <<EOF
+touch ~/.cargo/config.toml
+tee ~/.cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = 'rsproxy-sparse'
 [source.rsproxy]

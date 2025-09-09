@@ -24,9 +24,6 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
           # Change this to point to your image name
-          imageName: ghcr.io/example/example-devcontainer
+          imageName: ${{ secrets.DOCKERHUB_USERNAME }}/devenv
           # Change this to be your CI task/script
-          runCmd: |
-            # Add multiple commands to run if needed
-            make install-packages
-            make ci-build
+          push: always
