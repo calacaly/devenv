@@ -112,7 +112,7 @@ apt update && apt-get install -y --no-install-recommends \
     gdb \
     tcpdump \
     inetutils-telnet \
-    netcat-openbsd
+    netcat-openbsd \
     procps \
     iproute2 \
     net-tools \ 
@@ -129,6 +129,7 @@ echo "tools installed ✅"
 
 # >>> rust setting >>>
 echo "setting rust ✅"
+mkdir -p ~/.cargo
 touch ~/.cargo/config.toml
 tee ~/.cargo/config.toml <<EOF
 [source.crates-io]
