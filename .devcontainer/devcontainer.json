@@ -21,7 +21,7 @@
     "ghcr.io/devcontainers-community/features/llvm": {},
     "ghcr.io/devcontainers-extra/features/nmap-apt-get:1": {},
     "ghcr.io/devcontainers/features/java:1": {},
-    "../features/my-dev-tools": {}
+    "./features/my-dev-tools": {}
   },
   "customizations": {
     "vscode": {
