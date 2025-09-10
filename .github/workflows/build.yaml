@@ -21,14 +21,19 @@ jobs:
           registry: docker.io
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Extract Docker Metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/devenv
-          tags: |
-            type=match,pattern=\d.\d.\d
-            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
+      - name: 🏷️ Extract Tag Only
+        id: tag
+        run: |
+          # 如果是 tag 触发，取版本号（去掉 v）
+          if [[ $GITHUB_REF =~ ^refs/tags/ ]]; then
+            TAG="${GITHUB_REF_NAME#v}"
+          else
+            # 否则可能是 latest/dev 等
+            TAG="latest"
+            # 或者跳过：exit 1
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "🎯 Tag extracted: $TAG"
 
       - name: Build and run Dev Container task
         uses: devcontainers/ci@v0.3
@@ -36,5 +41,5 @@ jobs:
           # Change this to point to your image name
           imageName: ${{ secrets.DOCKERHUB_USERNAME }}/devenv
           # Change this to be your CI task/script
-          imageTag: ${{ steps.meta.outputs.tags }}
+          imageTag: ${{ steps.tag.outputs.tag }}
           push: always
