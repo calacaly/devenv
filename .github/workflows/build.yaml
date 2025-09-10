@@ -27,8 +27,8 @@ jobs:
         with:
           images: ${{ secrets.DOCKERHUB_USERNAME }}/devenv
           tags: |
-            type=ref,event=tag
-            type=raw,value=latest,enable={{is_default_branch}}
+            type=match,pattern=\d.\d.\d
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
 
       - name: Build and run Dev Container task
         uses: devcontainers/ci@v0.3
