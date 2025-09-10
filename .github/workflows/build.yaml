@@ -24,11 +24,9 @@ jobs:
       - name: 🏷️ Extract Tag Only
         id: tag
         run: |
-          # 如果是 tag 触发，取版本号（去掉 v）
           if [[ $GITHUB_REF =~ ^refs/tags/ ]]; then
             TAG="${GITHUB_REF_NAME#v}"
           else
-            # 否则可能是 latest/dev 等
             TAG="latest"
             # 或者跳过：exit 1
           fi
